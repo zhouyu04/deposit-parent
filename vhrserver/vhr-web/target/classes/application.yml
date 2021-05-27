@@ -28,3 +28,7 @@ fastdfs:
 logging:
   level:
     org.javaboy.vhr.mapper: DEBUG
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
