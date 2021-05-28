@@ -4,7 +4,7 @@
 
 
     <insert id="add" parameterType="org.javaboy.vhr.deposit.SubjectInfo">
-        insert into sub(subject_code,subject_name,is_active)values(#{subjectCode},#{subjectName},#{isActive})
+        insert into sub(subject_code,subject_name)values(#{subjectCode},#{subjectName})
     </insert>
 
     <select id="list" parameterType="org.javaboy.vhr.deposit.SubjectInfo"
@@ -24,6 +24,7 @@
                 and (subject_code like concat('%', #{skey},'%') or subject_name like concat('%', #{skey},'%'))
             </if>
         </where>
+        limit #{page},#{size}
     </select>
 
     <select id="listCount" resultType="long">
