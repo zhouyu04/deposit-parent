@@ -12,7 +12,7 @@ package org.javaboy.vhr.model;
 public class RespBean {
     private Integer status;
     private String msg;
-    private Object obj;
+    private Object data;
 
     public static RespBean build() {
         return new RespBean();
@@ -22,25 +22,25 @@ public class RespBean {
         return new RespBean(200, msg, null);
     }
 
-    public static RespBean ok(String msg, Object obj) {
-        return new RespBean(200, msg, obj);
+    public static RespBean ok(String msg, Object data) {
+        return new RespBean(200, msg, data);
     }
 
     public static RespBean error(String msg) {
         return new RespBean(500, msg, null);
     }
 
-    public static RespBean error(String msg, Object obj) {
-        return new RespBean(500, msg, obj);
+    public static RespBean error(String msg, Object data) {
+        return new RespBean(500, msg, data);
     }
 
     private RespBean() {
     }
 
-    private RespBean(Integer status, String msg, Object obj) {
+    private RespBean(Integer status, String msg, Object data) {
         this.status = status;
         this.msg = msg;
-        this.obj = obj;
+        this.data = data;
     }
 
     public Integer getStatus() {
@@ -62,11 +62,11 @@ public class RespBean {
     }
 
     public Object getObj() {
-        return obj;
+        return data;
     }
 
-    public RespBean setObj(Object obj) {
-        this.obj = obj;
+    public RespBean setObj(Object data) {
+        this.data = data;
         return this;
     }
 }

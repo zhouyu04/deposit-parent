@@ -1,12 +1,13 @@
 package org.javaboy.vhr.deposit;
 
 import lombok.Data;
+import org.javaboy.vhr.model.PageInfo;
 
 /**
  * 科目信息
  */
 @Data
-public class SubjectInfo {
+public class SubjectInfo extends PageInfo {
 
     private String id;
 
@@ -14,7 +15,7 @@ public class SubjectInfo {
 
     private String subjectName;
 
-    private Integer active;//1-可用 2-不可用
+    private Integer isActive;//1-可用 2-不可用
 
     private String skey;//模糊查询条件
 

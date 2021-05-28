@@ -11,4 +11,6 @@ public interface DepositSubMapper {
     void add(SubjectInfo subjectInfo);
 
     List<SubjectInfo> list(SubjectInfo subjectInfo);
+
+    long listCount(SubjectInfo subjectInfo);
 }

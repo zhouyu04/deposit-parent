@@ -4,7 +4,7 @@
 
 
     <insert id="add" parameterType="org.javaboy.vhr.deposit.SubjectInfo">
-        insert into sub(subject_code,subject_name,active)values(#{subjectCode},#{subjectName},#{active})
+        insert into sub(subject_code,subject_name,is_active)values(#{subjectCode},#{subjectName},#{isActive})
     </insert>
 
     <select id="list" parameterType="org.javaboy.vhr.deposit.SubjectInfo"
@@ -17,14 +17,31 @@
             <if test="subjectName != null and subjectName != ''">
                 and subject_name = #{subjectName}
             </if>
-            <if test="active != null">
-                and active = #{active}
+            <if test="isActive != null">
+                and is_active = #{isActive}
             </if>
             <if test="skey != null">
                 and (subject_code like concat('%', #{skey},'%') or subject_name like concat('%', #{skey},'%'))
             </if>
         </where>
+    </select>
 
+    <select id="listCount" resultType="long">
+        select count(*) from sub
+        <where>
+            <if test="subjectCode != null and subjectCode != ''">
+                and subject_code = #{subjectCode}
+            </if>
+            <if test="subjectName != null and subjectName != ''">
+                and subject_name = #{subjectName}
+            </if>
+            <if test="isActive != null">
+                and is_active = #{isActive}
+            </if>
+            <if test="skey != null">
+                and (subject_code like concat('%', #{skey},'%') or subject_name like concat('%', #{skey},'%'))
+            </if>
+        </where>
     </select>
 
 </mapper>
