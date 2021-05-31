@@ -1,12 +1,14 @@
 package org.javaboy.vhr.service.deposit;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaboy.vhr.common.utils.PinYinUtil;
 import org.javaboy.vhr.config.BizCustomException;
 import org.javaboy.vhr.deposit.Appointment;
 import org.javaboy.vhr.deposit.ProjectInfo;
 import org.javaboy.vhr.mapper.DepositBaseMapper;
 import org.javaboy.vhr.mapper.DepositProMapper;
 import org.javaboy.vhr.model.PageInfo;
+import org.javaboy.vhr.model.RespBean;
 import org.javaboy.vhr.model.RespPageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +38,7 @@ public class DepositBaseService {
         long proId = depositProMapper.add(projectInfo);
         System.out.println("保存项目ID:" + proId);
 
-        appointment.setProjectId(proId+"");
+        appointment.setProjectId(proId + "");
 
     }
 
@@ -63,5 +65,16 @@ public class DepositBaseService {
         respPageBean.setTotal(100L);
 
         return respPageBean;
+    }
+
+    public RespBean createCode(String name) {
+
+        if (StringUtils.isBlank(name)) {
+            return RespBean.ok("");
+        }
+
+        String firstSpell = PinYinUtil.getFirstSpell(name);
+
+        return RespBean.ok(firstSpell);
     }
 }

@@ -32,4 +32,10 @@ public class DepositController {
     }
 
 
+    @RequestMapping("createCode")
+    public RespBean createCode(String name){
+        return depositBaseService.createCode(name);
+    }
+
+
 }

@@ -20,6 +20,8 @@ public class Menu implements Serializable {
 
     private Integer parentId;
 
+    private Boolean show;
+
     private Boolean enabled;
     private List<Menu> children;
     private List<Role> roles;
@@ -110,5 +112,13 @@ public class Menu implements Serializable {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public boolean isShow() {
+        return show;
+    }
+
+    public void setShow(Boolean show) {
+        this.show = show;
     }
 }
