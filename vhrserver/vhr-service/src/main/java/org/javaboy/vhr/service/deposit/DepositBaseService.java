@@ -1,6 +1,7 @@
 package org.javaboy.vhr.service.deposit;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaboy.vhr.common.utils.DateTimeUtil;
 import org.javaboy.vhr.common.utils.PinYinUtil;
 import org.javaboy.vhr.config.BizCustomException;
 import org.javaboy.vhr.deposit.Appointment;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -73,7 +75,12 @@ public class DepositBaseService {
             return RespBean.ok("");
         }
 
-        String firstSpell = PinYinUtil.getFirstSpell(name);
+        StringBuilder sb = new StringBuilder();
+
+        String firstSpell = sb.append(PinYinUtil.getFirstSpell(name))
+                .append("_")
+                .append(DateTimeUtil.format(new Date(), DateTimeUtil.SUP_SHORT_PATTERN)).toString();
+
 
         return RespBean.ok(firstSpell);
     }
