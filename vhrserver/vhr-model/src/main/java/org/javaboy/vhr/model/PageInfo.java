@@ -9,6 +9,5 @@ public class PageInfo {
 
     private int size = 10;
 
-
-
+    private String key;
 }

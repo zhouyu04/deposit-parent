@@ -8,4 +8,22 @@
         insert into project(`name`,`code`)values(#{name},#{code})
     </insert>
 
+    <select id="list" parameterType="org.javaboy.vhr.deposit.ProjectInfo" resultType="org.javaboy.vhr.deposit.ProjectInfo">
+        select * from project
+        <where>
+            <if test="key != null and key != ''">
+                and (`name` like concat('%',#{key},'%') or `code` like concat('%',#{key},'%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="count" resultType="long">
+        select count(*) from project
+        <where>
+            <if test="key != null and key != ''">
+                and (`name` like concat('%',#{key},'%') or `code` like concat('%',#{key},'%'))
+            </if>
+        </where>
+    </select>
+
 </mapper>
