@@ -9,4 +9,6 @@ import java.util.List;
 @Mapper
 public interface DepositBaseMapper {
     List<Appointment> list(PageInfo info);
+
+    void addAppointment(Appointment appointment);
 }

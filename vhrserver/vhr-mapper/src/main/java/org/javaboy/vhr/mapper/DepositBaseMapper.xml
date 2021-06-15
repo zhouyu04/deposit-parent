@@ -4,8 +4,19 @@
 
 
     <select id="list" resultType="org.javaboy.vhr.deposit.Appointment">
-        select * from appointment limit #{page},#{size}
+        SELECT a.*,b.name AS 'project',b.code AS 'projectCode' ,c.`subject_name` AS 'subjectName'
+        FROM appointment a
+        LEFT JOIN project b ON a.project_id = b.id
+        LEFT JOIN sub c ON a.sub_id = c.id
+        LIMIT #{page},#{size}
     </select>
+
+    <insert id="addAppointment" parameterType="org.javaboy.vhr.deposit.Appointment">
+        insert into appointment(sub_id,proof,reference,project_id,business_no,settlement_type,settlement,
+        target_sub,sys_module,`describe`,debit_money,credit_money,direction,balance)
+        values(#{subId},#{proof},#{reference},#{projectId},#{businessNo},#{settlementType},#{settlement},
+        #{targetSub},#{sysModule},#{describe},#{debitMoney},#{creditMoney},#{direction},#{balance})
+    </insert>
 
 
 </mapper>

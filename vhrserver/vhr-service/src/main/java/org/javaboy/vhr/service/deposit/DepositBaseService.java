@@ -33,15 +33,20 @@ public class DepositBaseService {
 
         checkParams(appointment);
 
-        ProjectInfo projectInfo = new ProjectInfo();
-        projectInfo.setName(appointment.getProject());
-        projectInfo.setCode(appointment.getProjectCode());
+        String projectId = appointment.getProject();
+        if (StringUtils.isBlank(projectId)) {
+            ProjectInfo projectInfo = new ProjectInfo();
+            projectInfo.setName(appointment.getProject());
+            projectInfo.setCode(appointment.getProjectCode());
 
-        long proId = depositProMapper.add(projectInfo);
-        System.out.println("保存项目ID:" + proId);
+            depositProMapper.add(projectInfo);
+            projectId = projectInfo.getId();
+        }
+        System.out.println("保存项目ID:" + projectId);
 
-        appointment.setProjectId(proId + "");
+        appointment.setProjectId(projectId);
 
+        depositBaseMapper.addAppointment(appointment);
     }
 
     private void checkParams(Appointment appointment) {
