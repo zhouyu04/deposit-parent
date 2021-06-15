@@ -1,6 +1,7 @@
 package org.javaboy.vhr.deposit;
 
 import lombok.Data;
+import org.javaboy.vhr.common.interfaces.FieldMeta;
 
 import java.math.BigDecimal;
 
@@ -12,6 +13,8 @@ public class Appointment {
     private String subId;//科目id
 
     private String subjectName;
+
+    private String empDate;//业务日期
 
     private String proof;//凭证
 

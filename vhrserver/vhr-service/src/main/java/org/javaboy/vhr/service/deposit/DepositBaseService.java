@@ -2,6 +2,7 @@ package org.javaboy.vhr.service.deposit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.javaboy.vhr.common.utils.DateTimeUtil;
+import org.javaboy.vhr.common.utils.ExcelUtils;
 import org.javaboy.vhr.common.utils.PinYinUtil;
 import org.javaboy.vhr.config.BizCustomException;
 import org.javaboy.vhr.deposit.Appointment;
@@ -14,7 +15,9 @@ import org.javaboy.vhr.model.RespPageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -88,5 +91,13 @@ public class DepositBaseService {
 
 
         return RespBean.ok(firstSpell);
+    }
+
+    public RespBean importExcel(MultipartFile file) {
+
+        ExcelUtils.readExcelFileToDTO(file,)
+
+
+        return null;
     }
 }
