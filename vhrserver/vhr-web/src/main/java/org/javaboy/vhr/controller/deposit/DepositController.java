@@ -21,7 +21,7 @@ public class DepositController {
     DepositBaseService depositBaseService;
 
     @RequestMapping("add")
-    public RespBean add(@RequestBody Appointment appointment) {
+    public RespBean add(@RequestBody Appointment appointment){
 
         depositBaseService.add(appointment);
         return RespBean.ok("保存成功");
@@ -36,7 +36,7 @@ public class DepositController {
 
     @RequestMapping("createCode")
     public RespBean createCode(@RequestParam("name") String name) {
-        return depositBaseService.createCode(name);
+        return RespBean.ok(depositBaseService.createCode(name));
     }
 
     @RequestMapping("import")

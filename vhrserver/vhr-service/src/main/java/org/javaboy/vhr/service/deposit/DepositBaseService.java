@@ -2,7 +2,6 @@ package org.javaboy.vhr.service.deposit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.javaboy.vhr.common.utils.DateTimeUtil;
-import org.javaboy.vhr.common.utils.ExcelUtils;
 import org.javaboy.vhr.common.utils.PinYinUtil;
 import org.javaboy.vhr.config.BizCustomException;
 import org.javaboy.vhr.deposit.Appointment;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileInputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -36,11 +34,11 @@ public class DepositBaseService {
 
         checkParams(appointment);
 
-        String projectId = appointment.getProject();
+        String projectId = appointment.getProjectId();
         if (StringUtils.isBlank(projectId)) {
             ProjectInfo projectInfo = new ProjectInfo();
             projectInfo.setName(appointment.getProject());
-            projectInfo.setCode(appointment.getProjectCode());
+            projectInfo.setCode(createCode(appointment.getProject()));
 
             depositProMapper.add(projectInfo);
             projectId = projectInfo.getId();
@@ -77,10 +75,10 @@ public class DepositBaseService {
         return respPageBean;
     }
 
-    public RespBean createCode(String name) {
+    public String createCode(String name) {
 
         if (StringUtils.isBlank(name)) {
-            return RespBean.ok("");
+            return "";
         }
 
         StringBuilder sb = new StringBuilder();
@@ -90,12 +88,12 @@ public class DepositBaseService {
                 .append(DateTimeUtil.format(new Date(), DateTimeUtil.SUP_SHORT_PATTERN)).toString();
 
 
-        return RespBean.ok(firstSpell);
+        return firstSpell;
     }
 
     public RespBean importExcel(MultipartFile file) {
 
-        ExcelUtils.readExcelFileToDTO(file,)
+//        ExcelUtils.readExcelFileToDTO(file,)
 
 
         return null;

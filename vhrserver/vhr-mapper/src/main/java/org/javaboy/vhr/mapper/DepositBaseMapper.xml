@@ -12,9 +12,9 @@
     </select>
 
     <insert id="addAppointment" parameterType="org.javaboy.vhr.deposit.Appointment">
-        insert into appointment(sub_id,proof,reference,project_id,business_no,settlement_type,settlement,
+        insert into appointment(sub_id,proof,emp_date,reference,project_id,business_no,settlement_type,settlement,
         target_sub,sys_module,`describe`,debit_money,credit_money,direction,balance)
-        values(#{subId},#{proof},#{reference},#{projectId},#{businessNo},#{settlementType},#{settlement},
+        values(#{subId},#{proof},#{empDate},#{reference},#{projectId},#{businessNo},#{settlementType},#{settlement},
         #{targetSub},#{sysModule},#{describe},#{debitMoney},#{creditMoney},#{direction},#{balance})
     </insert>
 
