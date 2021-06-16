@@ -1,5 +1,6 @@
 package org.javaboy.vhr.common.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,22 +81,27 @@ public class ExcelUtils {
             T dto = clazz.newInstance();
             for (Field field : clazz.getDeclaredFields()) {
                 FieldMeta desc = field.getAnnotation(FieldMeta.class);
+                if (desc == null) {
+                    continue;
+                }
                 String value = valueMap.get(desc.fileNote());
-                if (value != null) {
-                    if (field.getType().getName().equalsIgnoreCase("java.lang.Integer")) {
-                        Method method = clazz.getMethod(getSetMethodName(field.getName()), field.getType());
+                if (StringUtils.isNotBlank(value)) {
+                    String name = field.getType().getName();
+                    Method method = clazz.getMethod(getSetMethodName(field.getName()), field.getType());
+                    if (name.equalsIgnoreCase("java.lang.Integer")) {
                         Integer age = Integer.parseInt(value.substring(0, value.indexOf(".")));
                         method.invoke(dto, age);
+                    } else if (name.equalsIgnoreCase("java.math.BigDecimal")) {
+                        BigDecimal bigDecimal = new BigDecimal(value);
+                        method.invoke(dto, bigDecimal);
                     } else {
-                        Method method = clazz.getMethod(getSetMethodName(field.getName()), field.getType());
                         method.invoke(dto, value);
                     }
                 }
             }
-
             return dto;
         } catch (Exception e) {
-            e.getStackTrace();
+            e.printStackTrace();
         }
         return null;
     }

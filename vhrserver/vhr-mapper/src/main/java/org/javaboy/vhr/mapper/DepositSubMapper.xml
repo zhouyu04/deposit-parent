@@ -45,4 +45,11 @@
         </where>
     </select>
 
+    <select id="listByCodes" resultType="org.javaboy.vhr.deposit.SubjectInfo">
+        select * from sub where subject_code in
+        <foreach collection="subCodes" open="(" item="code" separator="," close=")">
+            #{code}
+        </foreach>
+    </select>
+
 </mapper>

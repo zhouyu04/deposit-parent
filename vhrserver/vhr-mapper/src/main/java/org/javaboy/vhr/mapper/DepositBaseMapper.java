@@ -11,4 +11,6 @@ public interface DepositBaseMapper {
     List<Appointment> list(PageInfo info);
 
     void addAppointment(Appointment appointment);
+
+    void batchInsert(List<Appointment> list);
 }

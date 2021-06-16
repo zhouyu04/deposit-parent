@@ -34,13 +34,8 @@ public class DepositController {
     }
 
 
-    @RequestMapping("createCode")
-    public RespBean createCode(@RequestParam("name") String name) {
-        return RespBean.ok(depositBaseService.createCode(name));
-    }
-
     @RequestMapping("import")
-    public RespBean importExcel(MultipartFile file){
+    public RespBean importExcel(MultipartFile file) throws Exception{
 
         return depositBaseService.importExcel(file);
     }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DepositSubService {
@@ -52,5 +53,10 @@ public class DepositSubService {
         respPageBean.setTotal(total);
 
         return respPageBean;
+    }
+
+    public List<SubjectInfo> listByCodes(Set<String> subCodes) {
+
+        return depositSubMapper.listByCodes(subCodes);
     }
 }

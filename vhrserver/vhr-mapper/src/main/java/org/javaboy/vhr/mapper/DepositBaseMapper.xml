@@ -18,5 +18,15 @@
         #{targetSub},#{sysModule},#{describe},#{debitMoney},#{creditMoney},#{direction},#{balance})
     </insert>
 
+    <insert id="batchInsert" parameterType="org.javaboy.vhr.deposit.Appointment">
+        insert into appointment(sub_id,proof,emp_date,reference,project_id,business_no,settlement_type,settlement,
+        target_sub,sys_module,`describe`,debit_money,credit_money,direction,balance)
+        values
+        <foreach collection="list" item="app" separator=",">
+            (#{app.subId},#{app.proof},#{app.empDate},#{app.reference},#{app.projectId},#{app.businessNo},#{app.settlementType},#{app.settlement},
+            #{app.targetSub},#{app.sysModule},#{app.describe},#{app.debitMoney},#{app.creditMoney},#{app.direction},#{app.balance})
+        </foreach>
+    </insert>
+
 
 </mapper>

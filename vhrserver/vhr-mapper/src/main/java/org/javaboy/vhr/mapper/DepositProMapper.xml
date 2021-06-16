@@ -26,4 +26,11 @@
         </where>
     </select>
 
+    <select id="listByName" resultType="org.javaboy.vhr.deposit.ProjectInfo">
+        select * from project where `name` in
+        <foreach collection="list" open="(" item="pro" separator="," close=")">
+            #{pro}
+        </foreach>
+    </select>
+
 </mapper>
