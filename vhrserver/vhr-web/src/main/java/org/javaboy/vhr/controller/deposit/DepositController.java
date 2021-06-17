@@ -33,6 +33,12 @@ public class DepositController {
         return depositBaseService.list(info);
     }
 
+    @RequestMapping("detail")
+    public RespBean detail(@RequestParam("id") String id){
+
+        Appointment appointment = depositBaseService.detail(id);
+        return RespBean.ok("success",appointment);
+    }
 
     @RequestMapping("import")
     public RespBean importExcel(MultipartFile file) throws Exception{

@@ -13,4 +13,6 @@ public interface DepositBaseMapper {
     void addAppointment(Appointment appointment);
 
     void batchInsert(List<Appointment> list);
+
+    Appointment findById(String id);
 }

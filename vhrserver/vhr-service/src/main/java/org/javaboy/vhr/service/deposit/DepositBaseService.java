@@ -143,4 +143,12 @@ public class DepositBaseService {
         map = subjectInfos.stream().collect(Collectors.toMap(SubjectInfo::getSubjectCode, SubjectInfo::getId));
         return map;
     }
+
+    public Appointment detail(String id) {
+
+        Appointment appointment = depositBaseMapper.findById(id);
+        System.out.println(appointment);
+
+        return appointment;
+    }
 }
