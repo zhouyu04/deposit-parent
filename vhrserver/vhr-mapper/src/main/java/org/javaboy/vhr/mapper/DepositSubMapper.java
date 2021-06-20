@@ -10,7 +10,7 @@ import java.util.Set;
 @Mapper
 public interface DepositSubMapper {
 
-    void add(SubjectInfo subjectInfo);
+    int add(SubjectInfo subjectInfo);
 
     List<SubjectInfo> list(SubjectInfo subjectInfo);
 

@@ -27,6 +27,14 @@ public class DepositController {
         return RespBean.ok("保存成功");
     }
 
+    @RequestMapping("edit")
+    public RespBean edit(@RequestBody Appointment appointment){
+
+        depositBaseService.edit(appointment);
+        return RespBean.ok("修改成功");
+    }
+
+
     @RequestMapping("list")
     public RespPageBean list(@RequestBody PageInfo info) {
 

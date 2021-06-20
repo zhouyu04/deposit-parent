@@ -18,4 +18,10 @@ public interface DepositProMapper {
     long count(ProjectInfo info);
 
     List<ProjectInfo> listByName(@Param("list") Set<String> list);
+
+    ProjectInfo findById(String id);
+
+    ProjectInfo findByName(String name);
+
+    void edit(ProjectInfo projectInfo);
 }

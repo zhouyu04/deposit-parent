@@ -2,6 +2,7 @@ package org.javaboy.vhr.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.javaboy.vhr.deposit.Appointment;
+import org.javaboy.vhr.deposit.AppointmentPro;
 import org.javaboy.vhr.model.PageInfo;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface DepositBaseMapper {
     void batchInsert(List<Appointment> list);
 
     Appointment findById(String id);
+
+    void edit(Appointment appointment);
+
+    void batchInsertReleated(List<AppointmentPro> list);
 }

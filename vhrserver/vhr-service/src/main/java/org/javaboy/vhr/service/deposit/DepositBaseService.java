@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.javaboy.vhr.common.utils.ExcelUtils;
 import org.javaboy.vhr.config.BizCustomException;
 import org.javaboy.vhr.deposit.Appointment;
+import org.javaboy.vhr.deposit.AppointmentPro;
 import org.javaboy.vhr.deposit.ProjectInfo;
 import org.javaboy.vhr.deposit.SubjectInfo;
 import org.javaboy.vhr.excel.AppointmentImportDto;
@@ -57,9 +58,7 @@ public class DepositBaseService {
             throw new BizCustomException(20001, "摘要不能空为");
         }
 
-        if (StringUtils.isBlank(appointment.getProjectCode())) {
-            throw new BizCustomException(20002, "摘要CODE不能为空");
-        }
+
     }
 
     public RespPageBean list(PageInfo info) {
@@ -76,7 +75,7 @@ public class DepositBaseService {
         return respPageBean;
     }
 
-
+    @Transactional
     public RespBean importExcel(MultipartFile file) throws IOException {
 
         List<AppointmentImportDto> appointments = ExcelUtils.readExcelFileToDTO(file, AppointmentImportDto.class);
@@ -99,8 +98,15 @@ public class DepositBaseService {
             Appointment appointment = new Appointment();
             BeanUtils.copyProperties(dto, appointment);
             //处理科目值
-            String subId = subMap.containsKey(dto.getSubjectCode()) ? subMap.get(dto.getSubjectCode()) : "";
-            appointment.setSubId(subId);
+            if (subMap.containsKey(dto.getSubjectCode())){
+                appointment.setSubId(subMap.get(dto.getSubjectCode()));
+            }else {
+                SubjectInfo sub = new SubjectInfo();
+                sub.setSubjectName(dto.getSubjectName());
+                sub.setSubjectCode(dto.getSubjectCode());
+                SubjectInfo add = depositSubService.add(sub);
+                appointment.setSubId(add.getId());
+            }
             //处理借贷值
             String directionStr = dto.getDirectionStr();
             if (StringUtils.equals(directionStr, "借")) {
@@ -150,5 +156,49 @@ public class DepositBaseService {
         System.out.println(appointment);
 
         return appointment;
+    }
+
+    @Transactional
+    public void edit(Appointment appointment) {
+
+
+        String id = appointment.getId();
+        if (StringUtils.isBlank(id)) {
+            throw new BizCustomException(10001, "修改ID不能为空");
+        }
+
+        Appointment exist = depositBaseMapper.findById(appointment.getId());
+
+        //修改项目
+        String project = appointment.getProject();
+        String existProject = exist.getProject();
+        if (!StringUtils.equals(project, existProject)) {
+            ProjectInfo projectInfo = new ProjectInfo();
+            projectInfo.setId(exist.getProjectId());
+            projectInfo.setName(appointment.getProject());
+            depositProService.edit(projectInfo);
+        }
+
+        //修改保证金
+        if (exist == null) {
+            throw new BizCustomException(10001, "找不到修改数据");
+        }
+        String existReference = exist.getReference();
+        if (!StringUtils.equals(exist.getReference(), appointment.getReference())) {
+            depositBaseMapper.edit(appointment);
+        }
+
+        //修改关联摘要
+        List<String> releateProject = appointment.getReleateProject();
+        if (!CollectionUtils.isEmpty(releateProject)) {
+            List<AppointmentPro> appointmentPros = new ArrayList<>();
+            releateProject.forEach(proId -> {
+                AppointmentPro appointmentPro = new AppointmentPro();
+                appointmentPro.setAppId(appointment.getId());
+                appointmentPro.setProId(proId);
+                appointmentPros.add(appointmentPro);
+            });
+            depositBaseMapper.batchInsertReleated(appointmentPros);
+        }
     }
 }

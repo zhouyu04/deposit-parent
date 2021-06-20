@@ -33,4 +33,24 @@
         </foreach>
     </select>
 
+    <select id="findById" resultType="org.javaboy.vhr.deposit.ProjectInfo">
+        select * from project where id =#{id}
+    </select>
+
+    <select id="findByName" resultType="org.javaboy.vhr.deposit.ProjectInfo">
+        select * from project where `name` =#{name}
+    </select>
+
+    <update id="edit" parameterType="org.javaboy.vhr.deposit.ProjectInfo">
+        update project
+        <set>
+            <if test="name != null and name != ''">
+                `name` = #{name},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+        </set>
+    </update>
+
 </mapper>

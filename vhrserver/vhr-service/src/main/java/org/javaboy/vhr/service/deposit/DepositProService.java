@@ -3,6 +3,7 @@ package org.javaboy.vhr.service.deposit;
 import org.apache.commons.lang3.StringUtils;
 import org.javaboy.vhr.common.utils.DateTimeUtil;
 import org.javaboy.vhr.common.utils.PinYinUtil;
+import org.javaboy.vhr.config.BizCustomException;
 import org.javaboy.vhr.deposit.ProjectInfo;
 import org.javaboy.vhr.mapper.DepositProMapper;
 import org.javaboy.vhr.model.RespPageBean;
@@ -34,6 +35,11 @@ public class DepositProService {
 
     public String addByName(String project) {
 
+        ProjectInfo byName = depositProMapper.findByName(project);
+        if (byName != null){
+            return byName.getId();
+        }
+
         ProjectInfo projectInfo = new ProjectInfo();
         projectInfo.setName(project);
         projectInfo.setCode(createCode(project));
@@ -62,5 +68,23 @@ public class DepositProService {
 
 
         return depositProMapper.listByName(proNames);
+    }
+
+    private void checkExist(ProjectInfo projectInfo) {
+        ProjectInfo project = depositProMapper.findByName(projectInfo.getName());
+        if (project != null) {
+            throw new BizCustomException(1002, "项目名称已经存在");
+        }
+
+    }
+
+    public void edit(ProjectInfo projectInfo) {
+        checkExist(projectInfo);
+
+        String code = createCode(projectInfo.getName());
+        projectInfo.setCode(code);
+
+        depositProMapper.edit(projectInfo);
+
     }
 }

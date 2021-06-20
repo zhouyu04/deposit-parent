@@ -18,13 +18,14 @@ public class DepositSubService {
     @Autowired
     DepositSubMapper depositSubMapper;
 
-    public RespBean add(SubjectInfo subjectInfo) {
+    public SubjectInfo add(SubjectInfo subjectInfo) {
 
         checkParams(subjectInfo);
 
-        depositSubMapper.add(subjectInfo);
+        int id = depositSubMapper.add(subjectInfo);
 
-        return RespBean.ok("添加成功");
+        return subjectInfo;
+//        return RespBean.ok("添加成功",subjectInfo);
     }
 
     private void checkParams(SubjectInfo subjectInfo) {

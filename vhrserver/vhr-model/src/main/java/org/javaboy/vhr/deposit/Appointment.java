@@ -1,9 +1,11 @@
 package org.javaboy.vhr.deposit;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.javaboy.vhr.common.interfaces.FieldMeta;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 @Data
 public class Appointment {
@@ -14,7 +16,8 @@ public class Appointment {
 
     private String subjectName;
 
-    private String empDate;//业务日期
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date empDate;//业务日期
 
     private String proof;//凭证
 
@@ -25,6 +28,8 @@ public class Appointment {
     private String project;//摘要-既项目
 
     private String projectCode;//项目code
+
+    private List<String> releateProject;//关联项目名称
 
     private String businessNo;//业务编号
 
@@ -38,11 +43,11 @@ public class Appointment {
 
     private String describe;//描述
 
-    private BigDecimal debitMoney;//借方金额
-
-    private BigDecimal creditMoney;//贷方金额
+    private BigDecimal money;//借方金额
 
     private int direction;//方向 1-借 2-贷
 
     private BigDecimal balance;//余额
+
+    List<ProjectInfo> pros;
 }

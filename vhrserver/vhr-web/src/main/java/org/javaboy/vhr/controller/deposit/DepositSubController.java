@@ -20,7 +20,8 @@ public class DepositSubController {
     @RequestMapping("add")
     public RespBean add(@RequestBody SubjectInfo subjectInfo) {
 
-        return depositSubService.add(subjectInfo);
+        subjectInfo = depositSubService.add(subjectInfo);
+        return RespBean.ok("添加成功",subjectInfo);
     }
 
     @RequestMapping("list")

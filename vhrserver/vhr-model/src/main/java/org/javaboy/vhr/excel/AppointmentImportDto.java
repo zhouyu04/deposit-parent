@@ -44,11 +44,8 @@ public class AppointmentImportDto {
     @FieldMeta(fileNote = "业务描述")
     private String describe;//描述
 
-    @FieldMeta(fileNote = "借方金额")
-    private BigDecimal debitMoney;//借方金额
-
-    @FieldMeta(fileNote = "贷方金额")
-    private BigDecimal creditMoney;//贷方金额
+    @FieldMeta(fileNote = "金额")
+    private BigDecimal money;//借方金额
 
     @FieldMeta(fileNote = "方向")
     private String directionStr;//方向 1-借 2-贷

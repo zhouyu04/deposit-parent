@@ -3,7 +3,7 @@
 <mapper namespace="org.javaboy.vhr.mapper.DepositSubMapper">
 
 
-    <insert id="add" parameterType="org.javaboy.vhr.deposit.SubjectInfo">
+    <insert id="add" parameterType="org.javaboy.vhr.deposit.SubjectInfo" useGeneratedKeys="true" keyProperty="id">
         insert into sub(subject_code,subject_name)values(#{subjectCode},#{subjectName})
     </insert>
 
