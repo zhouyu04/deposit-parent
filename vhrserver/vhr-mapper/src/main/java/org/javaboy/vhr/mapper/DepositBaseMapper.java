@@ -20,4 +20,6 @@ public interface DepositBaseMapper {
     void edit(Appointment appointment);
 
     void batchInsertReleated(List<AppointmentPro> list);
+
+    long count(PageInfo info);
 }

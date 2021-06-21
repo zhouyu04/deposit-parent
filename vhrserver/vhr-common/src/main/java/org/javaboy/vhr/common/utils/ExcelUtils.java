@@ -2,10 +2,7 @@ package org.javaboy.vhr.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.javaboy.vhr.common.interfaces.FieldMeta;
 import org.springframework.web.multipart.MultipartFile;
@@ -128,11 +125,14 @@ public class ExcelUtils {
         if (cell == null) {
             return "";
         }
-        switch (cell.getCellTypeEnum()) {
+        switch (cell.getCellType()) {
             case STRING:
                 return cell.getStringCellValue();
 //            case NUMERIC: return String.format("%.2f", cell.getNumericCellValue());
             case NUMERIC:
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    return DateTimeUtil.formatDate(cell.getDateCellValue());
+                }
                 return String.valueOf(cell.getNumericCellValue());
             case BOOLEAN:
                 return cell.getBooleanCellValue() ? "true" : "false";

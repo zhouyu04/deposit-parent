@@ -1,6 +1,7 @@
 package org.javaboy.vhr.service.deposit;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaboy.vhr.common.utils.DateTimeUtil;
 import org.javaboy.vhr.common.utils.ExcelUtils;
 import org.javaboy.vhr.config.BizCustomException;
 import org.javaboy.vhr.deposit.Appointment;
@@ -20,6 +21,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -69,8 +71,9 @@ public class DepositBaseService {
         RespPageBean respPageBean = new RespPageBean();
 
         List<Appointment> appointmentList = depositBaseMapper.list(info);
+        long count = depositBaseMapper.count(info);
         respPageBean.setData(appointmentList);
-        respPageBean.setTotal(100L);
+        respPageBean.setTotal(count);
 
         return respPageBean;
     }
@@ -122,6 +125,12 @@ public class DepositBaseService {
                 appointment.setProjectId(proMap.get(project));
             } else {
                 appointment.setProjectId(depositProService.addByName(project));
+            }
+            try {
+                appointment.setEmpDate(DateTimeUtil.parseShortDate(dto.getEmpDate()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+                throw new BizCustomException(1003,"日期转换异常");
             }
             appointmentList.add(appointment);
         }

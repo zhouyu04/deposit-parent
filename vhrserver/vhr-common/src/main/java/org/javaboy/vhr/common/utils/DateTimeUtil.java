@@ -2,6 +2,7 @@ package org.javaboy.vhr.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -55,6 +56,11 @@ public class DateTimeUtil {
     public static String format(Date time,String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(time);
+    }
+
+    public static Date parseShortDate(String dateStr) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(SHORT_PATTERN);
+        return sdf.parse(dateStr);
     }
 
 }

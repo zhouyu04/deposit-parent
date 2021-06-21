@@ -36,6 +36,13 @@
         LIMIT #{page},#{size}
     </select>
 
+    <select id="count" resultType="long">
+         SELECT count(*)
+        FROM appointment a
+        LEFT JOIN project b ON a.project_id = b.id
+        LEFT JOIN sub c ON a.sub_id = c.id
+    </select>
+
     <insert id="addAppointment" parameterType="org.javaboy.vhr.deposit.Appointment">
         insert into appointment(sub_id,proof,emp_date,reference,project_id,business_no,settlement_type,settlement,
         target_sub,sys_module,`describe`,money,direction,balance)
