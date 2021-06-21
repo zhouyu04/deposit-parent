@@ -22,7 +22,7 @@
         <result column="balance" property="balance"/>
 
         <collection property="pros" ofType="org.javaboy.vhr.deposit.ProjectInfo">
-            <id column="project_id" property="id"/>
+            <id column="s_id" property="id"/>
             <result column="s_name" property="name"/>
             <result column="s_code" property="code"/>
         </collection>
@@ -62,7 +62,7 @@
 
     <select id="findById" resultMap="AppiontMentMap">
         select a.*, b.name AS 'project',b.code AS 'projectCode' ,c.`subject_name` AS 'subjectName',
-        e.name as 's_name',e.code as 's_code'
+        e.id as 's_id',e.name as 's_name',e.code as 's_code'
         from appointment a
         LEFT JOIN project b ON a.project_id = b.id
         LEFT JOIN appointment_project d ON d.app_id = a.id
