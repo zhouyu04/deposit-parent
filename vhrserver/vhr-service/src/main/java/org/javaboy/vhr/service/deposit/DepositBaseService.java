@@ -4,10 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.javaboy.vhr.common.utils.DateTimeUtil;
 import org.javaboy.vhr.common.utils.ExcelUtils;
 import org.javaboy.vhr.config.BizCustomException;
-import org.javaboy.vhr.deposit.Appointment;
-import org.javaboy.vhr.deposit.AppointmentPro;
-import org.javaboy.vhr.deposit.ProjectInfo;
-import org.javaboy.vhr.deposit.SubjectInfo;
+import org.javaboy.vhr.deposit.*;
 import org.javaboy.vhr.excel.AppointmentImportDto;
 import org.javaboy.vhr.mapper.DepositBaseMapper;
 import org.javaboy.vhr.model.PageInfo;
@@ -63,7 +60,7 @@ public class DepositBaseService {
 
     }
 
-    public RespPageBean list(PageInfo info) {
+    public RespPageBean list(AppQuery info) {
 
         int page = (info.getPage() - 1) * info.getSize();
         info.setPage(page);
@@ -109,6 +106,7 @@ public class DepositBaseService {
                 sub.setSubjectCode(dto.getSubjectCode());
                 SubjectInfo add = depositSubService.add(sub);
                 appointment.setSubId(add.getId());
+                subMap.put(dto.getSubjectCode(),add.getId());
             }
             //处理借贷值
             String directionStr = dto.getDirectionStr();

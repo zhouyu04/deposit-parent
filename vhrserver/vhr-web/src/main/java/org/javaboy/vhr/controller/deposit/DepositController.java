@@ -1,6 +1,7 @@
 package org.javaboy.vhr.controller.deposit;
 
 
+import org.javaboy.vhr.deposit.AppQuery;
 import org.javaboy.vhr.deposit.Appointment;
 import org.javaboy.vhr.model.PageInfo;
 import org.javaboy.vhr.model.RespBean;
@@ -36,7 +37,7 @@ public class DepositController {
 
 
     @RequestMapping("list")
-    public RespPageBean list(@RequestBody PageInfo info) {
+    public RespPageBean list(@RequestBody AppQuery info) {
 
         return depositBaseService.list(info);
     }

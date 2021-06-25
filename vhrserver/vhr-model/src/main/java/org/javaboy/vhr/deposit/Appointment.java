@@ -16,7 +16,7 @@ public class Appointment {
 
     private String subjectName;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private Date empDate;//业务日期
 
     private String proof;//凭证

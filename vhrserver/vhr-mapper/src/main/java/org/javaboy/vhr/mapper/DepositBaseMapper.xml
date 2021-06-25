@@ -28,11 +28,20 @@
         </collection>
 
     </resultMap>
-    <select id="list" resultType="org.javaboy.vhr.deposit.Appointment">
+    <select id="list" resultType="org.javaboy.vhr.deposit.Appointment" parameterType="org.javaboy.vhr.deposit.AppQuery">
         SELECT a.*,b.name AS 'project',b.code AS 'projectCode' ,c.`subject_name` AS 'subjectName'
         FROM appointment a
         LEFT JOIN project b ON a.project_id = b.id
         LEFT JOIN sub c ON a.sub_id = c.id
+        <where>
+            <if test="subId != null and subId != ''">
+                and c.id = #{subId}
+            </if>
+            <if test="skey != null and skey != ''">
+                and b.name like concat('%',#{skey},'%')
+            </if>
+        </where>
+        ORDER BY emp_date DESC
         LIMIT #{page},#{size}
     </select>
 
@@ -41,6 +50,14 @@
         FROM appointment a
         LEFT JOIN project b ON a.project_id = b.id
         LEFT JOIN sub c ON a.sub_id = c.id
+        <where>
+            <if test="subId != null and subId != ''">
+                and c.id = #{subId}
+            </if>
+            <if test="skey != null and skey != ''">
+                and b.name like concat('%',#{skey},'%')
+            </if>
+        </where>
     </select>
 
     <insert id="addAppointment" parameterType="org.javaboy.vhr.deposit.Appointment">
